@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bin Tracker - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard">
+                <i class="fas fa-recycle me-2"></i>Smart Bin Tracker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/dashboard">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reports">
+                            <i class="fas fa-flag me-1"></i>Report Issue
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/schedule">
+                            <i class="fas fa-calendar me-1"></i>Schedule
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/education">
+                            <i class="fas fa-graduation-cap me-1"></i>Education
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/rewards">
+                            <i class="fas fa-trophy me-1"></i>Rewards
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">
+                            <i class="fas fa-cog me-1"></i>Admin
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Welcome Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h1 class="card-title">
+                            <i class="fas fa-leaf me-2"></i>Welcome to Smart Bin Tracker
+                        </h1>
+                        <p class="card-text">Track waste collection, earn rewards, and make your community cleaner!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card text-center stats-card">
+                    <div class="card-body">
+                        <i class="fas fa-flag stats-icon text-danger"></i>
+                        <h3 class="stats-number" th:text="${totalReports}">0</h3>
+                        <p class="stats-label">Total Reports</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card text-center stats-card">
+                    <div class="card-body">
+                        <i class="fas fa-check-circle stats-icon text-success"></i>
+                        <h3 class="stats-number" th:text="${resolvedReports}">0</h3>
+                        <p class="stats-label">Resolved</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card text-center stats-card">
+                    <div class="card-body">
+                        <i class="fas fa-clock stats-icon text-warning"></i>
+                        <h3 class="stats-number" th:text="${pendingReports}">0</h3>
+                        <p class="stats-label">Pending</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card text-center stats-card">
+                    <div class="card-body">
+                        <i class="fas fa-users stats-icon text-info"></i>
+                        <h3 class="stats-number" th:text="${totalUsers}">0</h3>
+                        <p class="stats-label">Active Users</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resolution Rate -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-pie me-2"></i>Resolution Rate</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress mb-3" style="height: 30px;">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 th:style="'width: ' + ${resolutionRate} + '%'" 
+                                 th:text="${resolutionRate} + '%'">0%</div>
+                        </div>
+                        <p class="text-muted">Reports successfully resolved</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-bullhorn me-2"></i>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="/reports" class="btn btn-success">
+                                <i class="fas fa-plus me-2"></i>Report New Issue
+                            </a>
+                            <a href="/schedule" class="btn btn-info">
+                                <i class="fas fa-calendar-check me-2"></i>View Schedule
+                            </a>
+                            <a href="/rewards" class="btn btn-warning">
+                                <i class="fas fa-gift me-2"></i>Check Rewards
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Reports -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-history me-2"></i>Recent Reports</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(recentReports)}" class="text-center py-4">
+                            <i class="fas fa-inbox text-muted" style="font-size: 3rem;"></i>
+                            <p class="text-muted mt-3">No reports submitted yet</p>
+                            <a href="/reports" class="btn btn-primary">Submit First Report</a>
+                        </div>
+                        <div th:if="${!#lists.isEmpty(recentReports)}" class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Location</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Urgency</th>
+                                        <th>Submitted</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="report : ${recentReports}">
+                                        <td th:text="${report.location}">Location</td>
+                                        <td>
+                                            <span class="badge bg-secondary" th:text="${report.wasteType}">Type</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge" 
+                                                  th:class="${report.status.name() == 'RESOLVED'} ? 'bg-success' : 
+                                                           (${report.status.name() == 'IN_PROGRESS'} ? 'bg-warning' : 'bg-danger')"
+                                                  th:text="${report.status}">Status</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge"
+                                                  th:class="${report.urgency.name() == 'CRITICAL'} ? 'bg-danger' : 
+                                                           (${report.urgency.name() == 'HIGH'} ? 'bg-warning' : 'bg-info')"
+                                                  th:text="${report.urgency}">Urgency</span>
+                                        </td>
+                                        <td th:text="${#temporals.format(report.submittedAt, 'MMM dd, yyyy')}">Date</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html> 

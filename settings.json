@@ -1,0 +1,5 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3b1e4038-9866-4db5-b7e5-8620ca328cc5/resourceGroups/CTS-VibeAppUK641/providers/Microsoft.Web/sites/CTS-VibeAppUK6411-1",
+    "appService.deploySubpath": ".",
+    "java.compile.nullAnalysis.mode": "automatic"
+}
